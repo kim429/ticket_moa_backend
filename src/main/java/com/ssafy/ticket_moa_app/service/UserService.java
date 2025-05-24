@@ -1,11 +1,10 @@
 package com.ssafy.ticket_moa_app.service;
 
-import com.ssafy.ticket_moa_app.dao.UserDao;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.ssafy.ticket_moa_app.dto.User;
 
-@Service
-public class UserService {
-    @Autowired
-    private UserDao userDao;
+public interface UserService {
+    public int join(User user);
+    public User login(String id, String pass);
+    public boolean isUsedId(String id);
+    public User selectUser(User user);
 }
