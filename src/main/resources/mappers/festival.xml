@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.ticket_moa_app.dao.FestivalDao">
+
+    <!-- 알람 수 기준 TOP 1 -->
+    <select id="selectTopFestival" resultType="com.ssafy.ticket_moa_app.dto.Festival">
+        SELECT *
+        FROM festival
+        ORDER BY noti DESC
+        LIMIT 1
+    </select>
+
+    <!-- 티켓팅 날짜가 오늘인 공연 목록 -->
+    <select id="selectTodayFestivals" resultType="com.ssafy.ticket_moa_app.dto.Festival">
+        SELECT *
+        FROM festival
+        WHERE DATE(ticket_time) = CURRENT_DATE()
+        ORDER BY ticket_time
+    </select>
+
+    <!-- 전체 공연 목록 -->
+    <select id="selectAllFestivals" resultType="com.ssafy.ticket_moa_app.dto.Festival">
+        SELECT *
+        FROM festival
+        ORDER BY fes_date
+    </select>
+
+    <!-- 단건 공연 조회 -->
+    <select id="selectFestivalById" parameterType="int" resultType="com.ssafy.ticket_moa_app.dto.Festival">
+        SELECT *
+        FROM festival
+        WHERE fes_id = #{id}
+    </select>
+
+</mapper>

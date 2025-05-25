@@ -19,4 +19,5 @@ public class Festival {
     private String posterImg;         // 포스터 이미지
     private String desImg;            // 설명 이미지
     private int price;                // 가격
+    private int noti;          // 알람
 }
