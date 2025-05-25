@@ -65,6 +65,7 @@ CREATE TABLE review (
 
 select * from t_user;
 select * from festival;
+select * from review;
 
 INSERT INTO t_user (id, pass, name, email, phone, profile, points) VALUES ('ssafy', 'ssafy', '사용자1', 'ssafy1@ssafy.com', '010-1234-5678', 'Avatar.png', 5028);
 INSERT INTO t_user (id, pass, name, email, phone, profile, points) VALUES ('ssafy1', 'ssafy1', '사용자2', 'ssafy2@ssafy.com', '010-1234-5679', 'Avatar.png', 0);
