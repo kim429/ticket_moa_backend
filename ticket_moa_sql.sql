@@ -48,6 +48,20 @@ CREATE TABLE reservation (
     FOREIGN KEY (fes_id) REFERENCES festival(fes_id) ON DELETE CASCADE
 );
 
+ALTER TABLE reservation ADD COLUMN used BOOLEAN DEFAULT FALSE;
+
+CREATE TABLE review (
+    review_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(100),
+    fes_id INT,
+    comment TEXT NOT NULL,
+    rating INT CHECK (rating BETWEEN 1 AND 5),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES t_user(id) ON DELETE CASCADE,
+    FOREIGN KEY (fes_id) REFERENCES festival(fes_id) ON DELETE CASCADE
+);
+
+
 
 select * from t_user;
 select * from festival;
@@ -69,5 +83,13 @@ INSERT INTO reservation (user_id, fes_id, ticket_count, total_price, seat_row, s
 VALUES 
 ('ssafy', 1, 2, 240000, 'C', 7),
 ('ssafy1', 2, 1, 187000, 'A', 5);
+
+INSERT INTO review (user_id, fes_id, comment, rating, created_at) VALUES
+('ssafy', 1, '정말 멋진 공연이었어요! 다음에도 꼭 볼래요!', 5, NOW()),
+('ssafy', 1, '무대가 조금 아쉬웠지만 전체적으로 만족합니다.', 4, NOW()),
+('ssafy', 2, '지루했어요. 기대에 못 미쳤습니다.', 2, NOW()),
+('ssafy', 3, '가족이랑 보기 딱 좋았어요. 아이들도 너무 좋아했어요.', 5, NOW()),
+('ssafy', 2, '음향이 별로였어요. 공연 내용은 괜찮았지만...', 3, NOW());
+
 
 commit;
