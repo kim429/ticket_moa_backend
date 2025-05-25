@@ -28,10 +28,16 @@ public class NotiFestController {
         return service.getUserNotiList(id);
     }
 
-    @GetMapping("/count/{fesId}")
-    @Operation(summary = "공연에 알림 설정한 유저 수 반환")
+    @GetMapping("/noti/count/{fesId}")
+    @Operation(summary = "해당 공연을 알람 설정한 유저 수를 반환한다.")
     public int getNotiUserCount(@PathVariable int fesId) {
         return service.getNotiUserCount(fesId);
+    }
+
+    @PostMapping("/noti/add")
+    @Operation(summary = "해당 유저가 특정 공연에 알람을 추가한다.")
+    public void addNoti(@RequestParam String userId, @RequestParam int fesId) {
+        service.addFestivalNoti(userId, fesId);
     }
 
 }

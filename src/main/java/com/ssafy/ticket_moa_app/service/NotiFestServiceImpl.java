@@ -4,6 +4,8 @@ import com.ssafy.ticket_moa_app.dao.NotiFestDao;
 import com.ssafy.ticket_moa_app.dto.NotiFest;
 import com.ssafy.ticket_moa_app.dto.Festival;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,8 +35,18 @@ public class NotiFestServiceImpl implements NotiFestService {
     }
 
     @Override
+    @Cacheable(value = "notiUserCount", key = "#fesId") // 🔥 캐싱
     public int getNotiUserCount(int fesId) {
         return dao.countNotiUsersByFestival(fesId);
     }
+
+    @Override
+    @CacheEvict(value = "notiUserCount", key = "#fesId") // 🔥 캐시 무효화
+    public void addFestivalNoti(String userId, int fesId) {
+        dao.insertNoti(new NotiFest(userId, fesId));
+    }
+
+
+
 
 }

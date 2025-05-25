@@ -13,5 +13,6 @@ public interface NotiFestDao {
     int incrementFestivalNoti(int fesId);             // 공연 noti +1
     int decrementFestivalNoti(int fesId);             // 공연 noti -1
     int countNotiUsersByFestival(int fesId);
+    void insertNoti(NotiFest notiFest);
 
 }

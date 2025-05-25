@@ -50,4 +50,6 @@ VALUES ('2025 Weverse Con Festival', '인스파이어 아레나', '2025-05-31', 
 INSERT INTO festival (title, hall_name, fes_date, ticket_time, poster_img, des_img, price, noti) 
 VALUES ('안드로이드 일타강사 허태식의 Kotlin 특강', 'SSAFY 구미 캠퍼스 304호', '2025-05-28', '2025-05-25 10:00:00', 'heo_poster.png', 'heo_desc.png', 1500000, 13);
 
+INSERT INTO noti_fest (id, fes_id) VALUES ('ssafy', 1);
+
 commit;

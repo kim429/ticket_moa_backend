@@ -40,9 +40,17 @@
         where fes_id = #{fesId} and noti > 0
     </update>
 
+    <!-- 알람 설정 유저 수 조회 -->
     <select id="countNotiUsersByFestival" parameterType="int" resultType="int">
-        select count(*) from noti_fest where fes_id = #{fesId}
+        SELECT COUNT(*) FROM noti_fest WHERE fes_id = #{fesId}
     </select>
+
+    <!-- 알람 추가 -->
+    <insert id="insertNoti" parameterType="NotiFest">
+        INSERT IGNORE INTO noti_fest (id, fes_id)
+        VALUES (#{id}, #{fesId})
+    </insert>
+
 
 
 </mapper>
