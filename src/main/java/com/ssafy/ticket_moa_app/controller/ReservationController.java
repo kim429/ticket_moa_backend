@@ -4,6 +4,7 @@ import com.ssafy.ticket_moa_app.dto.Reservation;
 import com.ssafy.ticket_moa_app.service.ReservationService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,4 +27,12 @@ public class ReservationController {
     public Reservation getReservationById(@PathVariable int resId) {
         return service.getReservationById(resId);
     }
+
+    @PutMapping("/confirm/{resId}")
+    @Operation(summary = "입장 확인 true/false 반환 (기본이 false)")
+    public ResponseEntity<?> confirmEntry(@PathVariable int resId) {
+        service.confirmEntry(resId);
+        return ResponseEntity.ok("입장 확인 완료");
+    }
+
 }

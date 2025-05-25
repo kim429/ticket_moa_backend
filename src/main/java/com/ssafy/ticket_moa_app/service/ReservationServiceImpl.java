@@ -22,4 +22,10 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation getReservationById(int resId) {
         return dao.selectByResId(resId);
     }
+
+    @Override
+    public void confirmEntry(int resId) {
+        dao.confirmEntry(resId);
+    }
+
 }

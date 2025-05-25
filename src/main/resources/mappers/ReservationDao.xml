@@ -15,4 +15,11 @@
         WHERE res_id = #{resId}
     </select>
 
+    <update id="confirmEntry" parameterType="int">
+        UPDATE reservation
+        SET used = TRUE
+        WHERE res_id = #{resId}
+    </update>
+
+
 </mapper>
