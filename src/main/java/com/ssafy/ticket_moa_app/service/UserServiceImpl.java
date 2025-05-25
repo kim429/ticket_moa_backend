@@ -20,7 +20,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User login(String id, String pass) {
-        return dao.login(id, pass);
+        User user = new User();
+        user.setId(id);
+        user.setPass(pass);
+        return dao.login(user);
     }
 
     @Override

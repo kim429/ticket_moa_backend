@@ -2,6 +2,8 @@ package com.ssafy.ticket_moa_app.dao;
 
 import com.ssafy.ticket_moa_app.dto.User;
 
+import java.util.Map;
+
 public interface UserDao {
 
     // 사용자 정보 추가
@@ -11,9 +13,9 @@ public interface UserDao {
     int updatePoint(User user);
 
     // 사용자 정보 조회
-    User selectById(String userid);
+    User selectById(String id);
 
     //사용자 정보 조회
     User selectByUser(User user);
-    User login(String userId, String pass);
+    User login(User user);
 }

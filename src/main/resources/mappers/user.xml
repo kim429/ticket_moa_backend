@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.ticket_moa_app.dao.UserDao">
+
+    <select id="login" parameterType="com.ssafy.ticket_moa_app.dto.User" resultType="com.ssafy.ticket_moa_app.dto.User">
+        select id, name, pass
+        from t_user
+        where id = #{id} and pass = #{pass}
+    </select>
+
+    <select id="selectById" parameterType="String" resultType="User">
+        select id, name, pass
+        from t_user
+        where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="User">
+        insert into t_user (id, name, pass)
+        values (#{id}, #{name}, #{pass})
+    </insert>
+
+    <select id="selectByUser" parameterType="com.ssafy.ticket_moa_app.dto.User" resultType="User">
+        select *
+        from t_user
+        where id = #{id} and pass = #{pass}
+    </select>
+
+
+
+    <update id="updatePoint" parameterType="User">
+        update t_user
+        set points = #{points}
+        where id = #{id}
+    </update>
+
+
+</mapper>
