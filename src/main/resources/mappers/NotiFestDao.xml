@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.ticket_moa_app.dao.NotiFestDao">
+
+    <insert id="insertNotiFest" parameterType="NotiFest">
+        insert into noti_fest (id, fes_id)
+        values (#{id}, #{fesId})
+    </insert>
+
+    <delete id="deleteNotiFest" parameterType="NotiFest">
+        delete from noti_fest
+        where id = #{id} and fes_id = #{fesId}
+    </delete>
+
+    <select id="exists" parameterType="NotiFest" resultType="boolean">
+        select count(*) > 0
+        from noti_fest
+        where id = #{id} and fes_id = #{fesId}
+    </select>
+
+    <select id="selectByUserId" parameterType="String" resultType="Festival">
+        select f.*
+        from festival f
+        join noti_fest nf on f.fes_id = nf.fes_id
+        where nf.id = #{id}
+    </select>
+
+    <update id="incrementFestivalNoti" parameterType="int">
+        update festival
+        set noti = noti + 1
+        where fes_id = #{fesId}
+    </update>
+
+    <update id="decrementFestivalNoti" parameterType="int">
+        update festival
+        set noti = noti - 1
+        where fes_id = #{fesId} and noti > 0
+    </update>
+
+    <select id="countNotiUsersByFestival" parameterType="int" resultType="int">
+        select count(*) from noti_fest where fes_id = #{fesId}
+    </select>
+
+
+</mapper>

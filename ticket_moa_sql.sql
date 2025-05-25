@@ -23,8 +23,18 @@ CREATE TABLE festival (
     ticket_time DATETIME NOT NULL,                -- 티켓팅시간
     poster_img VARCHAR(255),                  -- 포스터 이미지
     des_img VARCHAR(255),                     -- 설명 이미지
-    price INT NOT NULL                       -- 가격
+    price INT NOT NULL,                       -- 가격
+    noti integer default 0 					  -- 즐겨찾기 
 );
+
+CREATE TABLE noti_fest (
+    id VARCHAR(100),        -- 유저 ID (FK)
+    fes_id INT,             -- 공연 ID (FK)
+    PRIMARY KEY (id, fes_id),
+    FOREIGN KEY (id) REFERENCES t_user(id) ON DELETE CASCADE,
+    FOREIGN KEY (fes_id) REFERENCES festival(fes_id) ON DELETE CASCADE
+);
+
 
 select * from t_user;
 select * from festival;
@@ -33,11 +43,11 @@ INSERT INTO t_user (id, pass, name, email, phone, profile, points) VALUES ('ssaf
 INSERT INTO t_user (id, pass, name, email, phone, profile, points) VALUES ('ssafy1', 'ssafy1', '사용자2', 'ssafy2@ssafy.com', '010-1234-5679', 'Avatar.png', 0);
 INSERT INTO t_user (id, pass, name, email, phone, profile, points) VALUES ('ssafy2', 'ssafy2', '사용자3', 'ssafy3@ssafy.com', '010-1234-5677', 'Avatar.png', 0);
 
-INSERT INTO festival (title, hall_name, fes_date, ticket_time, poster_img, des_img, price) 
-VALUES ('2025 인천펜타포트 락 페스티벌', '송도달빛축제공원', '2025-08-01', '2025-05-26 10:00:00', 'penta_poster.png', 'penta_desc.jpg', 120000);
-INSERT INTO festival (title, hall_name, fes_date, ticket_time, poster_img, des_img, price) 
-VALUES ('2025 Weverse Con Festival', '인스파이어 아레나', '2025-05-31', '2025-05-26 10:00:00', 'weverse_poster.jpg', 'weverse_desc.jpg', 187000);
-INSERT INTO festival (title, hall_name, fes_date, ticket_time, poster_img, des_img, price) 
-VALUES ('안드로이드 일타강사 허태식의 Kotlin 특강', 'SSAFY 구미 캠퍼스 304호', '2025-05-28', '2025-05-28 10:00:00', 'heo_poster.png', 'heo_desc.png', 1500000);
+INSERT INTO festival (title, hall_name, fes_date, ticket_time, poster_img, des_img, price, noti) 
+VALUES ('2025 인천펜타포트 락 페스티벌', '송도달빛축제공원', '2025-08-01', '2025-05-25 10:00:00', 'penta_poster.png', 'penta_desc.jpg', 120000, 23);
+INSERT INTO festival (title, hall_name, fes_date, ticket_time, poster_img, des_img, price, noti) 
+VALUES ('2025 Weverse Con Festival', '인스파이어 아레나', '2025-05-31', '2025-05-25 10:00:00', 'weverse_poster.jpg', 'weverse_desc.jpg', 187000, 0);
+INSERT INTO festival (title, hall_name, fes_date, ticket_time, poster_img, des_img, price, noti) 
+VALUES ('안드로이드 일타강사 허태식의 Kotlin 특강', 'SSAFY 구미 캠퍼스 304호', '2025-05-28', '2025-05-25 10:00:00', 'heo_poster.png', 'heo_desc.png', 1500000, 13);
 
 commit;
