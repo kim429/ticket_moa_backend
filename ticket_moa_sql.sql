@@ -35,6 +35,19 @@ CREATE TABLE noti_fest (
     FOREIGN KEY (fes_id) REFERENCES festival(fes_id) ON DELETE CASCADE
 );
 
+CREATE TABLE reservation (
+    res_id INT AUTO_INCREMENT PRIMARY KEY,      -- 예매 ID
+    user_id VARCHAR(100),                       -- 유저 ID (FK)
+    fes_id INT,                                 -- 공연 ID (FK)
+    res_date DATETIME DEFAULT CURRENT_TIMESTAMP,-- 예매 일시
+    ticket_count INT NOT NULL,                  -- 예매 수량
+    total_price INT NOT NULL,                   -- 총 가격
+    seat_row VARCHAR(1) NOT NULL,               -- 좌석 열 (A~Z)
+    seat_col INT NOT NULL,                      -- 좌석 행 (숫자)
+    FOREIGN KEY (user_id) REFERENCES t_user(id) ON DELETE CASCADE,
+    FOREIGN KEY (fes_id) REFERENCES festival(fes_id) ON DELETE CASCADE
+);
+
 
 select * from t_user;
 select * from festival;
@@ -51,5 +64,10 @@ INSERT INTO festival (title, hall_name, fes_date, ticket_time, poster_img, des_i
 VALUES ('안드로이드 일타강사 허태식의 Kotlin 특강', 'SSAFY 구미 캠퍼스 304호', '2025-05-28', '2025-05-25 10:00:00', 'heo_poster.png', 'heo_desc.png', 1500000, 13);
 
 INSERT INTO noti_fest (id, fes_id) VALUES ('ssafy', 1);
+
+INSERT INTO reservation (user_id, fes_id, ticket_count, total_price, seat_row, seat_col)
+VALUES 
+('ssafy', 1, 2, 240000, 'C', 7),
+('ssafy1', 2, 1, 187000, 'A', 5);
 
 commit;

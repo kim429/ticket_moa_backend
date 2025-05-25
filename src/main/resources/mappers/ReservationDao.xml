@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ssafy.ticket_moa_app.dao.ReservationDao">
+
+    <select id="selectByUserId" parameterType="string" resultType="Reservation">
+        SELECT * FROM reservation
+        WHERE user_id = #{userId}
+        ORDER BY res_date DESC
+    </select>
+
+    <select id="selectByResId" parameterType="int" resultType="Reservation">
+        SELECT * FROM reservation
+        WHERE res_id = #{resId}
+    </select>
+
+</mapper>
