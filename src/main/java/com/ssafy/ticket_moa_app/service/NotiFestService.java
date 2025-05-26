@@ -10,4 +10,6 @@ public interface NotiFestService {
     List<Festival> getUserNotiList(String id); // 유저의 알림 공연 목록
     int getNotiUserCount(int fesId);
     void addFestivalNoti(String userId, int fesId);
+    boolean isFestivalNotified(String id, int fesId);
+    boolean hasAnyNotifiedFestival(String id);
 }

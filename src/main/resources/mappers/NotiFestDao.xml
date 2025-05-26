@@ -51,6 +51,19 @@
         VALUES (#{id}, #{fesId})
     </insert>
 
+    <select id="isFestivalNotified" parameterType="map" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM noti_fest
+        WHERE id = #{id} AND fes_id = #{fesId}
+    </select>
+
+    <select id="hasAnyNotifiedFestival" parameterType="string" resultType="boolean">
+        SELECT COUNT(*) > 0
+        FROM noti_fest
+        WHERE id = #{id}
+    </select>
+
+
 
 
 </mapper>

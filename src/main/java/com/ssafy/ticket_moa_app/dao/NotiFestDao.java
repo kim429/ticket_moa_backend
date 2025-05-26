@@ -2,6 +2,7 @@ package com.ssafy.ticket_moa_app.dao;
 
 import com.ssafy.ticket_moa_app.dto.NotiFest;
 import com.ssafy.ticket_moa_app.dto.Festival;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,5 +15,7 @@ public interface NotiFestDao {
     int decrementFestivalNoti(int fesId);             // 공연 noti -1
     int countNotiUsersByFestival(int fesId);
     void insertNoti(NotiFest notiFest);
+    boolean isFestivalNotified(@Param("id") String id, @Param("fesId") int fesId);
+    boolean hasAnyNotifiedFestival(@Param("id") String id);
 
 }

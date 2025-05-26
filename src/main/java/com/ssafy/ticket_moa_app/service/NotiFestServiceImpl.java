@@ -46,7 +46,14 @@ public class NotiFestServiceImpl implements NotiFestService {
         dao.insertNoti(new NotiFest(userId, fesId));
     }
 
-
+    @Override
+    public boolean isFestivalNotified(String id, int fesId) {
+        return dao.isFestivalNotified(id, fesId);
+    }
+    @Override
+    public boolean hasAnyNotifiedFestival(String id) {
+        return dao.hasAnyNotifiedFestival(id);
+    }
 
 
 }

@@ -5,6 +5,7 @@ import com.ssafy.ticket_moa_app.dto.Festival;
 import com.ssafy.ticket_moa_app.service.NotiFestService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +39,22 @@ public class NotiFestController {
     @Operation(summary = "해당 유저가 특정 공연에 알람을 추가한다.")
     public void addNoti(@RequestParam String userId, @RequestParam int fesId) {
         service.addFestivalNoti(userId, fesId);
+    }
+
+    @GetMapping("/check")
+    @Operation(summary = "특정 공연을 user가 알람 설정 했으면 true 값 반환")
+    public ResponseEntity<Boolean> isNotified(
+            @RequestParam String id,
+            @RequestParam int fesId) {
+        boolean result = service.isFestivalNotified(id, fesId);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/any")
+    @Operation(summary = "사용자가 알람 설정한 공연이 1개라도 있으면 true 반환")
+    public ResponseEntity<Boolean> hasAnyNoti(@RequestParam String id) {
+        boolean result = service.hasAnyNotifiedFestival(id);
+        return ResponseEntity.ok(result);
     }
 
 }
