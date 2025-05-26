@@ -17,5 +17,7 @@ public class Reservation {
     private Date resDate;
     private int ticketCount;
     private int totalPrice;
-    private List<Seat> seats;  // 다중 좌석을 리스트로 받음
+    private Festival festival; // ✅ 공연 정보
+    private List<Seat> seats;  // ✅ 좌석 정보
+    private boolean used;
 }

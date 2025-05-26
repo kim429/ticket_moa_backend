@@ -8,4 +8,6 @@ public interface FestivalDao {
     List<Festival> selectTodayFestivals();
     List<Festival> selectAllFestivals();
     Festival selectFestivalById(int id);
+    // 공연 정보를 ID로 조회
+    Festival selectById(int fesId);
 }

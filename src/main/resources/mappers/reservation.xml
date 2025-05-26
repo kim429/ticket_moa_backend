@@ -4,11 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ssafy.ticket_moa_app.dao.ReservationDao">
 
-    <!-- ✅ 단순 예매 정보 조회 -->
-    <select id="selectSimpleByUserId" parameterType="string" resultType="Reservation">
-        SELECT * FROM reservation
-        WHERE user_id = #{userId}
-        ORDER BY res_date DESC
+    <!-- 사용자 예매 목록 조회 -->
+    <select id="selectByUserId" parameterType="String" resultMap="ReservationMap">
+        SELECT r.res_id, r.user_id, r.fes_id, r.ticket_count, r.total_price, r.res_date, r.used,
+        f.title as fes_title, f.fes_date, f.hall_name, f.ticket_time, f.poster_img, f.des_img, f.price, f.noti
+        FROM reservation r
+        JOIN festival f ON r.fes_id = f.fes_id
+        WHERE r.user_id = #{userId}
+        ORDER BY r.res_date DESC
     </select>
 
     <resultMap id="ReservationMap" type="com.ssafy.ticket_moa_app.dto.Reservation">
@@ -20,6 +23,19 @@
         <result property="totalPrice" column="total_price" />
         <result property="used" column="used" />
 
+        <!-- 공연 정보 매핑 -->
+        <association property="festival" javaType="com.ssafy.ticket_moa_app.dto.Festival">
+            <result property="fesId" column="fes_id" />
+            <result property="title" column="fes_title" />
+            <result property="fesDate" column="fes_date" />
+            <result property="ticketTime" column="ticket_time" />
+            <result property="posterImg" column="poster_img" />
+            <result property="desImg" column="des_img" />
+            <result property="price" column="price" />
+            <result property="noti" column="noti" />
+            <result property="hallName" column="hall_name" /> <!-- hall_name 매핑 추가 -->
+        </association>
+
         <!-- 좌석 목록 매핑 -->
         <collection property="seats" ofType="com.ssafy.ticket_moa_app.dto.Seat">
             <result property="seatRow" column="seat_row"/>
@@ -27,31 +43,54 @@
         </collection>
     </resultMap>
 
-    <select id="selectByUserId" parameterType="string" resultMap="ReservationMap">
-        SELECT r.*, s.seat_row, s.seat_col
+
+
+    <!-- 예매 상세 내역 조회 (festival 정보 포함) -->
+    <select id="selectByResId" parameterType="int" resultMap="ReservationMap">
+        SELECT r.res_id, r.user_id, r.fes_id, r.ticket_count, r.total_price, r.res_date, r.used,
+        f.title as fes_title, f.fes_date, f.hall_name, f.ticket_time, f.poster_img, f.des_img, f.price, f.noti
         FROM reservation r
-        LEFT JOIN reservation_seat s ON r.res_id = s.res_id
-        WHERE r.user_id = #{userId}
-        ORDER BY r.res_date DESC
+        JOIN festival f ON r.fes_id = f.fes_id
+        WHERE r.res_id = #{resId}
     </select>
 
-    <!-- ✅ 입장 확인 -->
+    <!-- 입장 확인 -->
     <update id="confirmEntry" parameterType="int">
         UPDATE reservation
         SET used = TRUE
         WHERE res_id = #{resId}
     </update>
 
-    <select id="countPastReservationsByUserId" parameterType="string" resultType="int">
+    <!-- 예매 정보 추가 -->
+    <insert id="insertReservation" parameterType="com.ssafy.ticket_moa_app.dto.Reservation" useGeneratedKeys="true" keyProperty="resId">
+        INSERT INTO reservation (user_id, fes_id, ticket_count, total_price, res_date, used)
+        VALUES (#{userId}, #{fesId}, #{ticketCount}, #{totalPrice}, NOW(), #{used});
+    </insert>
+
+    <!-- 좌석 정보 추가 -->
+    <insert id="insertReservationSeats" parameterType="map">
+        <foreach collection="seats" item="seat" separator=",">
+            INSERT INTO reservation_seat (res_id, fes_id, seat_row, seat_col)
+            VALUES (#{resId}, #{fesId}, #{seat.seatRow}, #{seat.seatCol})
+        </foreach>
+    </insert>
+
+
+    <!-- 예매 좌석 정보 조회 -->
+    <select id="selectSeatsByResId" parameterType="int" resultType="com.ssafy.ticket_moa_app.dto.Seat">
+        SELECT seat_row, seat_col
+        FROM reservation_seat
+        WHERE res_id = #{resId}
+    </select>
+
+    <!-- 과거 공연 예매 개수 조회 -->
+    <select id="countPastReservationsByUserId" parameterType="String" resultType="int">
         SELECT COUNT(*)
         FROM reservation r
         JOIN festival f ON r.fes_id = f.fes_id
         WHERE r.user_id = #{userId}
         AND f.fes_date &lt; CURRENT_DATE
     </select>
-
-
-
 
 
 </mapper>
