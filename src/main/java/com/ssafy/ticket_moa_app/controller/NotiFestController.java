@@ -24,13 +24,13 @@ public class NotiFestController {
 
     @GetMapping("/{id}")
     @Operation(summary = "사용자가 알림 설정한 공연 리스트 조회")
-    public List<Festival> getUserNotiList(@PathVariable String id) {
+    public List<Festival> getUserNotiList(@PathVariable("id") String id) {
         return service.getUserNotiList(id);
     }
 
     @GetMapping("/noti/count/{fesId}")
     @Operation(summary = "해당 공연을 알람 설정한 유저 수를 반환한다.")
-    public int getNotiUserCount(@PathVariable int fesId) {
+    public int getNotiUserCount(@PathVariable("fesId") int fesId) {
         return service.getNotiUserCount(fesId);
     }
 

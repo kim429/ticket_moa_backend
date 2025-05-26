@@ -36,4 +36,10 @@ public class UserServiceImpl implements UserService{
     public User selectUser(User user) {
         return dao.selectByUser(user);
     }
+
+//    @Override
+//    public int getPastReservationCount(String userId) {
+//        return dao.countPastReservations(userId);
+//    }
+
 }

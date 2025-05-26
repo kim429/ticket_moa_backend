@@ -35,7 +35,7 @@ public class FestivalController {
 
     @GetMapping("/{id}")
     @Operation(summary = "ID로 공연 정보를 단건 조회한다.")
-    public Festival getFestivalById(@PathVariable int id) {
+    public Festival getFestivalById(@PathVariable("id") int id) {
         return service.getFestivalById(id);
     }
 }

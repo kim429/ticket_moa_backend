@@ -7,4 +7,6 @@ public interface UserService {
     public User login(String id, String pass);
     public boolean isUsedId(String id);
     public User selectUser(User user);
+//    int getPastReservationCount(String userId);
+
 }

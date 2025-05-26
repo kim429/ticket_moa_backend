@@ -29,7 +29,7 @@ public class ReviewController {
 
     @GetMapping("/festival/{fesId}")
     @Operation(summary = "특정 공연의 기대평을 조회합니다.")
-    public List<Review> getReviewsByFestivalId(@PathVariable int fesId) {
+    public List<Review> getReviewsByFestivalId(@PathVariable("fesId") int fesId) {
         return reviewService.getReviewsByFestivalId(fesId);
     }
 
@@ -41,7 +41,7 @@ public class ReviewController {
 
     @DeleteMapping("/{reviewId}")
     @Operation(summary = "기대평을 삭제합니다.")
-    public int deleteReview(@PathVariable int reviewId) {
+    public int deleteReview(@PathVariable("reviewId") int reviewId) {
         return reviewService.deleteReview(reviewId);
     }
 }

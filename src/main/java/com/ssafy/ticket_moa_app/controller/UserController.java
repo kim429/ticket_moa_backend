@@ -7,6 +7,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,20 +25,25 @@ public class UserController {
     private UserService service;
 
     @PostMapping("/login")
-    @Operation(summary="로그인한다. 성공적으로 로그인 되면, User객체를 리턴한다.(그리고, loginId라는 쿠키도 response에 전달한다.)")
-    public User login(@RequestBody Map<String, String> user, Model model, HttpServletResponse response) throws UnsupportedEncodingException {
-        User dto = service.login(user.get("id"), user.get("pass"));
-        System.out.println(dto);
+    @Operation(summary="로그인한다. 성공적으로 로그인 되면, User 객체를 리턴한다.")
+    public ResponseEntity<User> login(@RequestBody User user, HttpServletResponse response) throws UnsupportedEncodingException {
+        User dto = service.login(user.getId(), user.getPass());
+
         if(dto != null) {
+            // 쿠키 설정
             Cookie c = new Cookie("loginId", URLEncoder.encode(dto.getId(), "UTF-8"));
-            c.setMaxAge(60*60*24);
+            c.setMaxAge(60 * 60 * 24);
             c.setPath("/");
             response.addCookie(c);
-        } else {
-            model.addAttribute("msg", "아이디 비번 틀림");
+
+            // ✅ 로그인 성공 시 User 객체를 JSON으로 반환
+            return ResponseEntity.ok(dto);
         }
-        return dto;
+
+        // ❗ 로그인 실패 시 401 에러 반환
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+
 
     @GetMapping("/logout")
     @Operation(summary = "로그아웃한다. 로그인 상태를 해제하고, 로그인 쿠키를 삭제한다.")
@@ -67,8 +74,14 @@ public class UserController {
     @Operation(summary="사용자의 정보와 함께 사용자의 주문내역, 사용자 등급 정보를 반환한다.")
     public Map<String, Object> info(@RequestBody User user) {
         User udto = service.selectUser(user);
+//        int viewCount = service.getPastReservationCount(user.getId());
+
         Map<String, Object> map = new HashMap<>();
         map.put("user", udto);
+//        map.put("viewCount", viewCount); // 🔥 총 관람 횟수 추가
+
         return map;
     }
+
+
 }
