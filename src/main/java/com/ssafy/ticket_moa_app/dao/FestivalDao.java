@@ -10,4 +10,7 @@ public interface FestivalDao {
     Festival selectFestivalById(int id);
     // 공연 정보를 ID로 조회
     Festival selectById(int fesId);
+    int countTodayFestivals(); // 오늘 티켓팅 가능한 공연 수 조회
+    List<Festival> selectTodayNotiFestivalsByUser(String userId);
+
 }

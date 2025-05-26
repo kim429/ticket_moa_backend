@@ -38,4 +38,16 @@ public class FestivalController {
     public Festival getFestivalById(@PathVariable("id") int id) {
         return service.getFestivalById(id);
     }
+
+    @GetMapping("/today/count")
+    @Operation(summary = "티켓팅 날짜가 오늘인 공연의 수를 조회한다.")
+    public int countTodayFestivals() {
+        return service.countTodayFestivals();
+    }
+
+    @GetMapping("/today/noti/{userId}")
+    @Operation(summary = "오늘 티켓팅 가능한 공연 중, 해당 유저가 알람 설정한 공연 목록 조회")
+    public List<Festival> getTodayNotiFestivalsByUser(@PathVariable("userId") String userId) {
+        return service.getTodayNotiFestivalsByUser(userId);
+    }
 }

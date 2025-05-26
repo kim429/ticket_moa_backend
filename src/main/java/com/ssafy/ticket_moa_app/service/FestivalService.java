@@ -9,4 +9,7 @@ public interface FestivalService {
     List<Festival> getTodayFestivals();
     List<Festival> getAllFestivals();
     Festival getFestivalById(int id);
+    int countTodayFestivals(); // 오늘 공연 수 반환
+    List<Festival> getTodayNotiFestivalsByUser(String userId);
+
 }

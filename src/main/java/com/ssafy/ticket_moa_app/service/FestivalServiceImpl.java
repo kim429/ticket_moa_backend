@@ -32,4 +32,14 @@ public class FestivalServiceImpl implements FestivalService {
     public Festival getFestivalById(int id) {
         return dao.selectFestivalById(id);
     }
+
+    @Override
+    public int countTodayFestivals() {
+        return dao.countTodayFestivals();
+    }
+
+    @Override
+    public List<Festival> getTodayNotiFestivalsByUser(String userId) {
+        return dao.selectTodayNotiFestivalsByUser(userId);
+    }
 }

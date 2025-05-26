@@ -40,4 +40,19 @@
         SELECT * FROM festival WHERE fes_id = #{fesId}
     </select>
 
+    <select id="countTodayFestivals" resultType="int">
+        SELECT COUNT(*)
+        FROM festival
+        WHERE DATE(ticket_time) = CURRENT_DATE()
+    </select>
+
+    <select id="selectTodayNotiFestivalsByUser" parameterType="string" resultType="com.ssafy.ticket_moa_app.dto.Festival">
+        SELECT f.*
+        FROM festival f
+        JOIN noti_fest nf ON f.fes_id = nf.fes_id
+        WHERE nf.id = #{userId}
+        AND DATE(f.ticket_time) = CURRENT_DATE()
+        ORDER BY f.ticket_time
+    </select>
+
 </mapper>
