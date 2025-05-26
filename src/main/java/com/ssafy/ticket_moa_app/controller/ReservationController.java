@@ -35,4 +35,11 @@ public class ReservationController {
         return ResponseEntity.ok("입장 확인 완료");
     }
 
+    @GetMapping("/user/{userId}/past-count")
+    @Operation(summary = "사용자의 과거 공연 예매 개수 조회")
+    public int countPastReservations(@PathVariable String userId) {
+        return service.countPastReservationsByUserId(userId);
+    }
+
+
 }

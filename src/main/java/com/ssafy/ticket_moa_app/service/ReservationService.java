@@ -7,4 +7,5 @@ public interface ReservationService {
     List<Reservation> getReservationsByUser(String userId);
     Reservation getReservationById(int resId);
     void confirmEntry(int resId);
+    int countPastReservationsByUserId(String userId);
 }

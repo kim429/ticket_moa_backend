@@ -11,7 +11,6 @@
         ORDER BY res_date DESC
     </select>
 
-    <!-- ✅ 예매 + 좌석 정보 조회 -->
     <resultMap id="ReservationMap" type="com.ssafy.ticket_moa_app.dto.Reservation">
         <id property="resId" column="res_id" />
         <result property="userId" column="user_id" />
@@ -20,9 +19,12 @@
         <result property="ticketCount" column="ticket_count" />
         <result property="totalPrice" column="total_price" />
         <result property="used" column="used" />
-        <!-- 좌석 정보 (Reservation 클래스에 있어야 함) -->
-        <result property="seatRow" column="seat_row"/>
-        <result property="seatCol" column="seat_col"/>
+
+        <!-- 좌석 목록 매핑 -->
+        <collection property="seats" ofType="com.ssafy.ticket_moa_app.dto.Seat">
+            <result property="seatRow" column="seat_row"/>
+            <result property="seatCol" column="seat_col"/>
+        </collection>
     </resultMap>
 
     <select id="selectByUserId" parameterType="string" resultMap="ReservationMap">
@@ -39,5 +41,17 @@
         SET used = TRUE
         WHERE res_id = #{resId}
     </update>
+
+    <select id="countPastReservationsByUserId" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM reservation r
+        JOIN festival f ON r.fes_id = f.fes_id
+        WHERE r.user_id = #{userId}
+        AND f.fes_date &lt; CURRENT_DATE
+    </select>
+
+
+
+
 
 </mapper>

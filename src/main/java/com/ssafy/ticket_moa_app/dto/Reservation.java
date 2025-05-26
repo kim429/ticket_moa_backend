@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -16,6 +17,5 @@ public class Reservation {
     private Date resDate;
     private int ticketCount;
     private int totalPrice;
-    private String seatRow; // 알파벳 좌석 열 (A~Z)
-    private int seatCol;    // 좌석 행 (숫자)
+    private List<Seat> seats;  // 다중 좌석을 리스트로 받음
 }

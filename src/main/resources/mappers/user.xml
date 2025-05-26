@@ -35,15 +35,6 @@
         where id = #{id}
     </update>
 
-<!--    <select id="countPastReservations" parameterType="String" resultType="int">-->
-<!--        SELECT COUNT(*)-->
-<!--        FROM reservation r-->
-<!--        JOIN festival f ON r.fes_id = f.fes_id-->
-<!--        WHERE r.user_id = #{userId}-->
-<!--        AND f.fes_date < CURDATE()-->
-<!--    </select>-->
-
-
 
 
 </mapper>

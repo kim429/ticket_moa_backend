@@ -19,7 +19,4 @@ public interface UserDao {
     User selectByUser(User user);
     User login(User user);
 
-    //사용자 총 관람 횟수
-//    int countPastReservations(String userId);
-
 }

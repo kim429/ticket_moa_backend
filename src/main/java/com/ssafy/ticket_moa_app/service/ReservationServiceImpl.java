@@ -28,4 +28,9 @@ public class ReservationServiceImpl implements ReservationService {
         dao.confirmEntry(resId);
     }
 
+    @Override
+    public int countPastReservationsByUserId(String userId) {
+        return dao.countPastReservationsByUserId(userId);
+    }
 }
+
